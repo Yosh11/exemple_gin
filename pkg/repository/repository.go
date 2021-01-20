@@ -1,5 +1,7 @@
 package repository
 
+import "github.com/jmoiron/sqlx"
+
 // Authorization ...
 type Authorization interface{}
 
@@ -17,6 +19,6 @@ type Repository struct {
 }
 
 // NewRepository ...
-func NewRepository() *Repository {
+func NewRepository(db *sqlx.DB) *Repository {
 	return &Repository{}
 }
