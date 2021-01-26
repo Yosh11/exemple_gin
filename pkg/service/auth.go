@@ -4,7 +4,7 @@ import (
 	"crypto/sha1"
 	"fmt"
 
-	web "github.com/Yosh11/exemple_gin"
+	"github.com/Yosh11/exemple_gin/model/todo"
 	"github.com/Yosh11/exemple_gin/pkg/repository"
 )
 
@@ -23,7 +23,7 @@ func NewAuthService(repo repository.Authorization) *AuthService {
 }
 
 // CreateUser ...
-func (s *AuthService) CreateUser(user web.User) (int, error) {
+func (s *AuthService) CreateUser(user todo.User) (int, error) {
 	user.Password = generatePasswordHash(user.Password)
 	return s.repo.CreateUser(user)
 }

@@ -1,4 +1,4 @@
-package web
+package todo
 
 // TodoList ...
 type TodoList struct {

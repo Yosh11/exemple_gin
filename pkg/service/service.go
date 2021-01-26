@@ -1,13 +1,13 @@
 package service
 
 import (
-	web "github.com/Yosh11/exemple_gin"
+	"github.com/Yosh11/exemple_gin/model/todo"
 	"github.com/Yosh11/exemple_gin/pkg/repository"
 )
 
 // Authorization ...
 type Authorization interface {
-	CreateUser(user web.User) (int, error)
+	CreateUser(user todo.User) (int, error)
 }
 
 // TodoList ...

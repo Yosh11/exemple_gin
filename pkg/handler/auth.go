@@ -3,12 +3,12 @@ package handler
 import (
 	"net/http"
 
-	web "github.com/Yosh11/exemple_gin"
+	"github.com/Yosh11/exemple_gin/model/todo"
 	"github.com/gin-gonic/gin"
 )
 
 func (h *Handler) singUp(c *gin.Context) {
-	var input web.User
+	var input todo.User
 
 	if err := c.BindJSON(&input); err != nil {
 		NewErrorResposnse(c, http.StatusBadRequest, err.Error())

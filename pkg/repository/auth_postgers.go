@@ -3,7 +3,7 @@ package repository
 import (
 	"fmt"
 
-	web "github.com/Yosh11/exemple_gin"
+	"github.com/Yosh11/exemple_gin/model/todo"
 	"github.com/jmoiron/sqlx"
 )
 
@@ -18,7 +18,7 @@ func NewAuthPostgres(db *sqlx.DB) *AuthPostgres {
 }
 
 // CreateUser ...
-func (r *AuthPostgres) CreateUser(user web.User) (int, error) {
+func (r *AuthPostgres) CreateUser(user todo.User) (int, error) {
 	var id int
 	query := fmt.Sprintf("INSERT INTO %s (name, username, password_hash) VALUES ($1, $2, $3) RETURNING id", usersTable)
 

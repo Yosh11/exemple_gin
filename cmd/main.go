@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	web "github.com/Yosh11/exemple_gin"
+	"github.com/Yosh11/exemple_gin/model/todo"
 	"github.com/Yosh11/exemple_gin/pkg/handler"
 	"github.com/Yosh11/exemple_gin/pkg/repository"
 	"github.com/Yosh11/exemple_gin/pkg/service"
@@ -39,7 +39,7 @@ func main() {
 	services := service.NewService(repos)
 	handlers := handler.NewHandler(services)
 
-	srv := new(web.Server)
+	srv := new(todo.Server)
 	if err := srv.Run(viper.GetString("port"), handlers.InitRoutes()); err != nil {
 		log.Fatalf("error occurred while starting server: %s ", err.Error())
 	}
