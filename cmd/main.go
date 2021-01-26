@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log"
 	"os"
 
 	web "github.com/Yosh11/exemple_gin"
@@ -10,10 +9,12 @@ import (
 	"github.com/Yosh11/exemple_gin/pkg/service"
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq" // ...
+	log "github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )
 
 func main() {
+	log.SetFormatter(&log.JSONFormatter{})
 	if err := initConfig(); err != nil {
 		log.Fatalf("error initializing configs: %s", err.Error())
 	}
