@@ -14,8 +14,8 @@ type UsersList struct {
 	ListID int
 }
 
-// TodoItems ...
-type TodoItems struct {
+// TodoItem ...
+type TodoItem struct {
 	ID          int    `json:"id"`
 	Title       string `json:"title"`
 	Description string `json:"description"`
