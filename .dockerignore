@@ -1,0 +1,8 @@
+# Volumes for db
+.database
+
+# All readme
+*.rm
+
+# IDE cache
+.vscode

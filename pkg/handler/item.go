@@ -11,24 +11,24 @@ import (
 func (h *Handler) createItem(c *gin.Context) {
 	userID, err := getUserID(c)
 	if err != nil {
-		NewErrorResponse(c, http.StatusInternalServerError, err.Error())
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 	}
 
 	listID, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		NewErrorResponse(c, http.StatusBadRequest, "invalid list id param")
+		newErrorResponse(c, http.StatusBadRequest, "invalid list id param")
 		return
 	}
 
 	var input todo.TodoItem
 	if err := c.BindJSON(&input); err != nil {
-		NewErrorResponse(c, http.StatusBadRequest, err.Error())
+		newErrorResponse(c, http.StatusBadRequest, err.Error())
 		return
 	}
 
 	id, err := h.services.TodoItem.Create(userID, listID, input)
 	if err != nil {
-		NewErrorResponse(c, http.StatusInternalServerError, err.Error())
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
 
@@ -40,19 +40,19 @@ func (h *Handler) createItem(c *gin.Context) {
 func (h *Handler) getAllItems(c *gin.Context) {
 	userID, err := getUserID(c)
 	if err != nil {
-		NewErrorResponse(c, http.StatusBadRequest, "invalid list id param")
+		newErrorResponse(c, http.StatusBadRequest, "invalid list id param")
 		return
 	}
 
 	listID, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		NewErrorResponse(c, http.StatusBadRequest, "invalid list id param")
+		newErrorResponse(c, http.StatusBadRequest, "invalid list id param")
 		return
 	}
 
 	items, err := h.services.TodoItem.GetAll(userID, listID)
 	if err != nil {
-		NewErrorResponse(c, http.StatusInternalServerError, err.Error())
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
 
@@ -62,19 +62,19 @@ func (h *Handler) getAllItems(c *gin.Context) {
 func (h *Handler) getItemByID(c *gin.Context) {
 	userID, err := getUserID(c)
 	if err != nil {
-		NewErrorResponse(c, http.StatusBadRequest, err.Error())
+		newErrorResponse(c, http.StatusBadRequest, err.Error())
 		return
 	}
 
 	itemID, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		NewErrorResponse(c, http.StatusBadRequest, "invalid list id param")
+		newErrorResponse(c, http.StatusBadRequest, "invalid list id param")
 		return
 	}
 
 	item, err := h.services.TodoItem.GetByID(userID, itemID)
 	if err != nil {
-		NewErrorResponse(c, http.StatusInternalServerError, err.Error())
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
 
@@ -84,24 +84,24 @@ func (h *Handler) getItemByID(c *gin.Context) {
 func (h *Handler) updateItem(c *gin.Context) {
 	userID, err := getUserID(c)
 	if err != nil {
-		NewErrorResponse(c, http.StatusBadRequest, err.Error())
+		newErrorResponse(c, http.StatusBadRequest, err.Error())
 		return
 	}
 
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		NewErrorResponse(c, http.StatusBadRequest, "invalid list id param")
+		newErrorResponse(c, http.StatusBadRequest, "invalid list id param")
 		return
 	}
 
 	var input todo.UpdateItemInput
 	if err := c.BindJSON(&input); err != nil {
-		NewErrorResponse(c, http.StatusBadRequest, err.Error())
+		newErrorResponse(c, http.StatusBadRequest, err.Error())
 		return
 	}
 
 	if err := h.services.TodoItem.Update(userID, id, input); err != nil {
-		NewErrorResponse(c, http.StatusInternalServerError, err.Error())
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
 
@@ -111,19 +111,19 @@ func (h *Handler) updateItem(c *gin.Context) {
 func (h *Handler) deleteItem(c *gin.Context) {
 	userID, err := getUserID(c)
 	if err != nil {
-		NewErrorResponse(c, http.StatusBadRequest, err.Error())
+		newErrorResponse(c, http.StatusBadRequest, err.Error())
 		return
 	}
 
 	itemID, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		NewErrorResponse(c, http.StatusBadRequest, "invalid list id param")
+		newErrorResponse(c, http.StatusBadRequest, "invalid list id param")
 		return
 	}
 
 	err = h.services.TodoItem.DeleteByID(userID, itemID)
 	if err != nil {
-		NewErrorResponse(c, http.StatusBadRequest, "invalid list id param")
+		newErrorResponse(c, http.StatusBadRequest, "invalid list id param")
 		return
 	}
 

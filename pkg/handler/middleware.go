@@ -8,25 +8,33 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-const userCtx = "userID"
+const (
+	authorizationHeader = "Authorization"
+	userCtx             = "userID"
+)
 
 func (h *Handler) userIdentity(c *gin.Context) {
-	header := c.GetHeader("Authorization")
+	header := c.GetHeader(authorizationHeader)
 	if header == "" {
-		NewErrorResponse(c, http.StatusUnauthorized, "empty auth header")
+		newErrorResponse(c, http.StatusUnauthorized, "empty auth header")
 		return
 	}
 
 	// valid Authorization header have 2 string bearer and token
 	headerParts := strings.Split(header, " ")
 	if len(headerParts) != 2 {
-		NewErrorResponse(c, http.StatusUnauthorized, "invalid auth header")
+		newErrorResponse(c, http.StatusUnauthorized, "invalid auth header")
+		return
+	}
+
+	if len(headerParts[1]) == 0 {
+		newErrorResponse(c, http.StatusUnauthorized, "token is empty")
 		return
 	}
 
 	userID, err := h.services.Authorization.ParseToken(headerParts[1])
 	if err != nil {
-		NewErrorResponse(c, http.StatusUnauthorized, err.Error())
+		newErrorResponse(c, http.StatusUnauthorized, err.Error())
 		return
 	}
 
@@ -36,13 +44,11 @@ func (h *Handler) userIdentity(c *gin.Context) {
 func getUserID(c *gin.Context) (int, error) {
 	id, ok := c.Get(userCtx)
 	if !ok {
-		NewErrorResponse(c, http.StatusInternalServerError, "user id not found")
 		return 0, errors.New("user id not found")
 	}
 
 	idInt, ok := id.(int)
 	if !ok {
-		NewErrorResponse(c, http.StatusInternalServerError, "user id is of invalid type")
 		return 0, errors.New("user id is of invalid type")
 	}
 

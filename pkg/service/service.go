@@ -5,6 +5,8 @@ import (
 	"github.com/Yosh11/exemple_gin/pkg/repository"
 )
 
+//go:generate mockgen -source=service.go -destination=mock/mock.go
+
 // Authorization ...
 type Authorization interface {
 	CreateUser(user todo.User) (int, error)
