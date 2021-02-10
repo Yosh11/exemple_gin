@@ -1,9 +1,10 @@
 FROM golang:latest
 
 RUN go version
-ENV GOPATH=/
 
-COPY ./ ./
+COPY . /go/src/app
+ENV GOPATH=/go
+WORKDIR /go/src/app
 
 RUN apt-get update
 RUN apt-get -y install postgresql-client
@@ -21,7 +22,6 @@ RUN migrate -version
 RUN chmod +x ./cmd/wait-for-postgres.sh
 RUN chmod +x ./migrate.sh
 
-RUN go mod download
 RUN go build -o todo-app ./cmd/main.go
 
 CMD [ "./todo-app" ]
