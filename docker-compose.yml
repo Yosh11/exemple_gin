@@ -4,7 +4,10 @@ services:
   todo-app:
     container_name: api
     build: ./
-    command: ["./cmd/wait-for-postgres.sh", "db", "./todo-app"]
+    command: bash -c "
+        ./cmd/wait-for-postgres.sh db
+        && ./migrate.sh
+        && ./todo-app"
     ports:
       - 8080:8080
     depends_on:
