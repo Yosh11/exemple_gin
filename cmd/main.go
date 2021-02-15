@@ -7,15 +7,16 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/Yosh11/exemple_gin/model/todo"
-	"github.com/Yosh11/exemple_gin/pkg/handler"
-	"github.com/Yosh11/exemple_gin/pkg/repository"
-	"github.com/Yosh11/exemple_gin/pkg/service"
 	"github.com/jmoiron/sqlx"
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq" // ...
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
+
+	"github.com/Yosh11/exemple_gin/model/todo"
+	"github.com/Yosh11/exemple_gin/pkg/handler"
+	"github.com/Yosh11/exemple_gin/pkg/repository"
+	"github.com/Yosh11/exemple_gin/pkg/service"
 )
 
 func main() {

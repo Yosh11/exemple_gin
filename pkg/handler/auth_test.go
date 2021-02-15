@@ -8,14 +8,14 @@ import (
 
 	"github.com/Yosh11/exemple_gin/model/todo"
 	"github.com/Yosh11/exemple_gin/pkg/service"
-	mock_service "github.com/Yosh11/exemple_gin/pkg/service/mock"
+	mockService "github.com/Yosh11/exemple_gin/pkg/service/mock"
 	"github.com/gin-gonic/gin"
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestHandler_singUp(t *testing.T) {
-	type mockBehavior func(r *mock_service.MockAuthorization, user todo.User)
+	type mockBehavior func(r *mockService.MockAuthorization, user todo.User)
 
 	tests := []struct {
 		name                 string
@@ -33,7 +33,7 @@ func TestHandler_singUp(t *testing.T) {
 				Username: "username",
 				Password: "qwerty",
 			},
-			mockBehavior: func(r *mock_service.MockAuthorization, user todo.User) {
+			mockBehavior: func(r *mockService.MockAuthorization, user todo.User) {
 				r.EXPECT().CreateUser(user).Return(1, nil)
 			},
 			expectedStatusCode:   200,
@@ -42,7 +42,7 @@ func TestHandler_singUp(t *testing.T) {
 		{
 			name:      "Wrong Input",
 			inputBody: `{"username": "username"}`,
-			mockBehavior: func(r *mock_service.MockAuthorization, user todo.User) {
+			mockBehavior: func(r *mockService.MockAuthorization, user todo.User) {
 			},
 			expectedStatusCode:   400,
 			expectedResponseBody: `{"message":"invalid input body"}`,
@@ -55,7 +55,7 @@ func TestHandler_singUp(t *testing.T) {
 				Username: "username",
 				Password: "qwerty",
 			},
-			mockBehavior: func(r *mock_service.MockAuthorization, user todo.User) {
+			mockBehavior: func(r *mockService.MockAuthorization, user todo.User) {
 				r.EXPECT().CreateUser(user).Return(0, errors.New("something went wrong"))
 			},
 			expectedStatusCode:   500,
@@ -68,11 +68,11 @@ func TestHandler_singUp(t *testing.T) {
 			c := gomock.NewController(t)
 			defer c.Finish()
 
-			repo := mock_service.NewMockAuthorization(c)
+			repo := mockService.NewMockAuthorization(c)
 			test.mockBehavior(repo, test.inputUser)
 
-			service := &service.Service{Authorization: repo}
-			handler := Handler{service}
+			s := &service.Service{Authorization: repo}
+			handler := Handler{s}
 
 			r := gin.New()
 			r.POST("/sing-up", handler.singUp)

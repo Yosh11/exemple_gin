@@ -2,7 +2,8 @@
 .database
 
 # All readme
-*.rm
+*.md
 
 # IDE cache
 .vscode
+.idea
